@@ -1,4 +1,4 @@
-package com.projecte.Ivan;
+package com.projecte.ivan;
 
 public class Ivan {
     static public void mostrarNom() {
