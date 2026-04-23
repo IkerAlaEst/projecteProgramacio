@@ -1,6 +1,7 @@
 package com.projecte.main;
 
 import com.projecte.ivan.Ivan;
+import com.projecte.andreu.Andreu;
 import com.projecte.iker.Iker;
 
 public class ProgramaPrincipal {
@@ -9,8 +10,9 @@ public class ProgramaPrincipal {
    }
 
    private static void inici() {
+      System.out.println("Membres de l'equip:");
       Ivan.mostrarNom();
-      // Andreu.mostrarNom();
+      Andreu.mostrarNom();
       Iker.mostrarNom();
    }
 }
