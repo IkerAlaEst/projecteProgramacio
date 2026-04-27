@@ -14,5 +14,6 @@ public class ProgramaPrincipal {
       Ivan.mostrarNom();
       Andreu.mostrarNom();
       Iker.mostrarNom();
+      System.out.println();
    }
 }
