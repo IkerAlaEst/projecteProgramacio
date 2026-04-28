@@ -1,8 +1,8 @@
 package com.projecte.main;
 
-import com.projecte.ivan.Ivan;
 import com.projecte.andreu.Andreu;
 import com.projecte.iker.Iker;
+import com.projecte.ivan.Ivan;
 
 public class ProgramaPrincipal {
    public static void main(String[] args) {
