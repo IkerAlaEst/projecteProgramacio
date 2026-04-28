@@ -5,11 +5,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Usuari implements Serializable{
-    private ArrayList<Pelicula> peliculesPersonal;
-    private ArrayList<Actor> actorsPersonal;
-    private ArrayList<Director> directorsPersonal;
+    private ArrayList<ListItem> peliculesPersonal;
+    private ArrayList<ListItem> actorsPersonal;
+    private ArrayList<ListItem> directorsPersonal;
 
-    private enum Rol {
+    public enum Rol {
         NORMAL, ADMIN
     }
 
@@ -78,5 +78,17 @@ public class Usuari implements Serializable{
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
+    }
+
+    public ArrayList<ListItem> getLlistaPelis() {
+        return peliculesPersonal;
+    }
+
+    public ArrayList<ListItem> getLlistaActor() {
+        return actorsPersonal;
+    }
+
+    public ArrayList<ListItem> getLlistaDire() {
+        return directorsPersonal;
     }
 }
