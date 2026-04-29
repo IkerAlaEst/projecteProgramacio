@@ -13,6 +13,7 @@ public class Usuari implements Serializable {
         NORMAL, ADMIN
     }
 
+    private int id;
     private String nom;
     private String cognoms;
     private String correu;
@@ -21,8 +22,9 @@ public class Usuari implements Serializable {
     private String contrasenya;
     private Rol rol;
 
-    public Usuari(String nom, String cognoms, String correu, String poblacio, LocalDate dataNaixement,
+    public Usuari(int id, String nom, String cognoms, String correu, String poblacio, LocalDate dataNaixement,
             String contrasenya, Rol rol) {
+        this.id = id;
         this.nom = nom;
         this.cognoms = cognoms;
         this.correu = correu;

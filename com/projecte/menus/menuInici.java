@@ -2,9 +2,9 @@ package com.projecte.menus;
 
 import com.projecte.entitats.Usuari;
 import java.io.EOFException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ public class menuInici {
         String opcion;
         String cont;
         String cont2;
-        int id = -1;
+        int id = 1;
 
         do {
 
@@ -47,10 +47,15 @@ public class menuInici {
                         cont = sc.nextLine();
                         System.out.println("Confirma la teua contrasenya");
                         cont2 = sc.nextLine();
+
+                        if (!cont.equals(cont2)) {
+                            System.out.println("Les contrasenyes no coincideixen");
+                        }
                     } while (!cont.equals(cont2));
 
                     System.out.println("Introdueix la teua poblacio: ");
                     String poblacio = sc.nextLine();
+
                     LocalDate data;
                     while (true) {
                         try {
@@ -62,58 +67,110 @@ public class menuInici {
                         }
 
                     }
-                    ;
 
-                    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("usuaris.txt"))) {
-                        try {
-                            while (true) {
-                                ois.readObject();
-                                id++;
+                    ArrayList<Usuari> usuaris = new ArrayList<>();
+
+                    File fitxer = new File("usuaris.txt");
+
+                    if (fitxer.exists()) {
+                        id = 1;
+                        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("usuaris.txt"))) {
+                            try {
+                                while (true) {
+                                    usuaris.add((Usuari) ois.readObject());
+                                    id++;
+                                }
+                            } catch (EOFException e) {
                             }
-                        } catch (EOFException e) {
-                        }
 
-                    } catch (Exception e) {
-                        System.out.println("ERROR: " + e.getMessage());
-                        break;
+                        } catch (Exception e) {
+                            System.out.println("ERROR: " + e.getMessage());
+                            break;
+                        }
                     }
 
-                    Usuari user = new Usuari(nom, cognom, email, poblacio, data, cont2, Usuari.Rol.NORMAL);
+                    Usuari user = new Usuari(id, nom, cognom, email, poblacio, data, cont2, Usuari.Rol.NORMAL);
 
-                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("usuaris.txt", true))) {
-                        oos.writeObject(user);
+                    usuaris.add(user);
+
+                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("usuaris.txt"))) {
+                        for (Usuari u : usuaris) {
+                            oos.writeObject(u);
+                        }
                     } catch (Exception e) {
                         System.out.println("Error de guardado " + e.getMessage());
                         break;
                     }
-                    System.out.println("Usuario creado correctamenete");
-                    break;
-                case "2":
-                    System.out.println("--- LOGIN ---");
-                    System.out.println("Introdueix el teu nom d'usuari: ");
-                    String u = sc.nextLine();
-                    System.out.println("Introedueix la teua contrasenya: ");
-                    String pswd = sc.nextLine();
 
-                    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("usuaris.txt"))) {
-                        ArrayList<Usuari> usuaris = (ArrayList<Usuari>) (ois.readObject());
-                        Usuari otro = (Usuari) (ois.readObject());
+                    // Crear carpeta personal
+                    String nomCarpeta = id + email.split("@")[0];
+                    File carpetaUsuari = new File(nomCarpeta);
+                    carpetaUsuari.mkdir();
 
-                        for (Usuari usuari : usuaris) {
-                            if (usuari.getNom()
-                                    .equals(otro.getNom() && usuari.getContrasenya().equals(otro.getContrasenya()))) {
-
-                            }
-                        }
+                    try {
+                        new File(carpetaUsuari, "pelicules.llista").createNewFile();
+                        new File(carpetaUsuari, "actors.llista").createNewFile();
+                        new File(carpetaUsuari, "directors.llista").createNewFile();
                     } catch (Exception e) {
 
                     }
+                    System.out.println("Usuari creat correctament");
+                    break;
+                case "2":
+                    System.out.println("--- LOGIN ---");
 
-                    MenuLlistats.executarMenu(user);
+                    boolean loginCorrecte = false;
+
+                    while (!loginCorrecte) {
+
+                        System.out.println("Introdueix el teu nom d'usuari: ");
+                        String u = sc.nextLine();
+                        System.out.println("Introedueix la teua contrasenya: ");
+                        String pswd = sc.nextLine();
+
+                        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("usuaris.txt"))) {
+                            ArrayList<Usuari> llista = new ArrayList<Usuari>();
+
+                            try {
+                                while (true) {
+                                    llista.add((Usuari) ois.readObject());
+                                }
+                            } catch (EOFException e) {
+                            }
+
+                            boolean trobat = false;
+
+                            for (Usuari usuari : llista) {
+
+                                if (usuari.getNom().equals(u) &&
+                                        usuari.getContrasenya().equals(pswd)) {
+
+                                    System.out.println("Credencials correctes");
+                                    System.out.println("Benvingut " + usuari.getNom() + " " + usuari.getCognoms());
+
+                                    loginCorrecte = true;
+                                    trobat = true;
+
+                                    MenuLlistats.executarMenu(usuari);
+                                    break;
+                                }
+                            }
+                            if (!trobat) {
+                                System.out.println("Usuari o contrasenya incorrectes");
+                            }
+                        } catch (Exception e) {
+
+                        }
+                    }
+                    break;
+                case "3":
+
+                    System.out.println("Programa tancat");
                     break;
                 default:
+                    System.out.println("Opcio incorrecta");
             }
 
-        } while (opcion != "3");
+        } while (!opcion.equals("3"));
     }
 }
