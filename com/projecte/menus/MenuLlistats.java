@@ -86,16 +86,51 @@ public class MenuLlistats {
          mostrarLlista(llista);
          do {
             opcion = retornarString("Vols veure detalls de un element en específic (s/n)?: ");
+
          } while (!opcion.equalsIgnoreCase("s") && !opcion.equalsIgnoreCase("n"));
 
          if (opcion.equalsIgnoreCase("s")) {
-            retornarElementoEnLista(llista);
+            retornarElementoEnLista(llista).mostrarDetalles();
          }
       }
    }
 
    private static void afegirElementLlistat(Usuari usuari) {
-      
+      System.out.println("--- ELIGEIX L'OPERACIÓ A FER ---");
+      System.out.println("1.- Afegir element a películes personal");
+      System.out.println("2.- Afegir element a directors personal");
+      System.out.println("3.- Afegir element a actors personal");
+      System.out.println("4.- Afegir element a películes global");
+      System.out.println("5.- Afegir element a directors global");
+      System.out.println("6.- Afegir element a actors global");
+      System.out.println("0.- Cancelar operació");
+      String opcion = retornarString("Introdueix què llistat dessitges veure: ");
+      switch (opcion) {
+         case "1":
+            
+            break;
+         case "2":
+            
+            break;
+         case "3":
+            
+            break;
+         case "4":
+            
+            break;
+         case "5":
+            
+            break;
+         case "6":
+            
+            break;
+         case "0":
+            System.out.println("Se cancelarà l'operació");
+            break;
+         default:
+            System.out.println("ERROR: Valor introduit (" + opcion + ") no reconegut. Es cancelarà l'operació");
+            break;
+      }
    }
 
    private static <T> void mostrarLlista(ArrayList<T> llista) {

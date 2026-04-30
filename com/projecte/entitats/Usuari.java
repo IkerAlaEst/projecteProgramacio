@@ -4,14 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Usuari implements Serializable {
+public class Usuari implements Serializable{
     private ArrayList<ListItem> peliculesPersonal;
     private ArrayList<ListItem> actorsPersonal;
     private ArrayList<ListItem> directorsPersonal;
-
-    public enum Rol {
-        NORMAL, ADMIN
-    }
 
     private String nom;
     private String cognoms;
@@ -38,55 +34,42 @@ public class Usuari implements Serializable {
     public String getNom() {
         return nom;
     }
-
     public void setNom(String nom) {
         this.nom = nom;
     }
-
     public String getCognoms() {
         return cognoms;
     }
-
     public void setCognoms(String cognoms) {
         this.cognoms = cognoms;
     }
-
     public String getCorreu() {
         return correu;
     }
-
     public void setCorreu(String correu) {
         this.correu = correu;
     }
-
     public String getPoblacio() {
         return poblacio;
     }
-
     public void setPoblacio(String poblacio) {
         this.poblacio = poblacio;
     }
-
     public LocalDate getDataNaixement() {
         return dataNaixement;
     }
-
     public void setDataNaixement(LocalDate dataNaixement) {
         this.dataNaixement = dataNaixement;
     }
-
     public String getContrasenya() {
         return contrasenya;
     }
-
     public void setContrasenya(String contrasenya) {
         this.contrasenya = contrasenya;
     }
-
     public Rol getRol() {
         return rol;
     }
-
     public void setRol(String rol) {
         try {
             this.rol = Rol.valueOf(rol.toUpperCase());
@@ -105,5 +88,9 @@ public class Usuari implements Serializable {
 
     public ArrayList<ListItem> getLlistaDire() {
         return directorsPersonal;
+    }
+
+    public void afegirPeli() {
+        
     }
 }
