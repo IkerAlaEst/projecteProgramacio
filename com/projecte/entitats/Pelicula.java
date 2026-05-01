@@ -10,12 +10,17 @@ public class Pelicula implements Serializable, ListItem {
     private Director director;
     private int anyPublicació;
 
-    public Pelicula(String nom, ArrayList<Actor> actors, Director director, int anyPublicació) {
+    public Pelicula(String nom, ArrayList<Actor> actors, Director director, int anyPublicació, int id) {
         this.id = id;
         this.nom = nom;
         this.actors = actors;
         this.director = director;
         this.anyPublicació = anyPublicació;
+    }
+
+    public Pelicula(String nom, int id) {
+        this.id = id;
+        this.nom = nom;
     }
 
     public String getNom() {

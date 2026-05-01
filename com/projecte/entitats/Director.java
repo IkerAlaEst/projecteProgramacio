@@ -14,6 +14,11 @@ public class Director implements Serializable, ListItem {
         this.obres = obres;
     }
 
+    public Director(String nom, int id) {
+        this.id = id;
+        this.nom = nom;
+    }
+
     public void mostrarDetalles() {
         System.out.println("Director " + nom + ":");
         System.out.println("- Pelis en les que ha treballat: \n" + nomsObres());

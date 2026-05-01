@@ -1,5 +1,6 @@
 package com.projecte.entitats;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class Usuari implements Serializable{
     private ArrayList<ListItem> actorsPersonal;
     private ArrayList<ListItem> directorsPersonal;
 
+    private final int id;
     private String nom;
     private String cognoms;
     private String correu;
@@ -16,9 +18,10 @@ public class Usuari implements Serializable{
     private LocalDate dataNaixement;
     private String contrasenya;
     private Rol rol;
+    private File carpetaPersonal;
 
-    public Usuari(String nom, String cognoms, String correu, String poblacio, LocalDate dataNaixement,
-            String contrasenya, Rol rol) {
+    public Usuari(int id, String nom, String cognoms, String correu, String poblacio, LocalDate dataNaixement, String contrasenya, Rol rol) {
+        this.id = id;
         this.nom = nom;
         this.cognoms = cognoms;
         this.correu = correu;
@@ -31,6 +34,9 @@ public class Usuari implements Serializable{
         this.peliculesPersonal = new ArrayList<>();
     }
 
+    public int getId() {
+        return id;
+    }
     public String getNom() {
         return nom;
     }
@@ -90,7 +96,35 @@ public class Usuari implements Serializable{
         return directorsPersonal;
     }
 
-    public void afegirPeli() {
-        
+    public void afegirPeli(Pelicula p) {
+        peliculesPersonal.add(p);
+    }
+
+    public void afegirDire(Director d) {
+        directorsPersonal.add(d);
+    }
+
+    public void afegirAct(Actor a) {
+        actorsPersonal.add(a);
+    }
+
+    public void setLlistaPelis(ArrayList<ListItem> novaLlista) {
+        peliculesPersonal = novaLlista;
+    }
+
+    public void setLlistaActor(ArrayList<ListItem> novaLlista) {
+        actorsPersonal = novaLlista;
+    }
+
+    public void setLlistaDire(ArrayList<ListItem> novaLlista) {
+        directorsPersonal = novaLlista;
+    }
+
+    public File getCarpetaPersonal() {
+        return carpetaPersonal;
+    }
+
+    public void setCarpetaPersonal(File carpetaPersonal) {
+        this.carpetaPersonal = carpetaPersonal;
     }
 }

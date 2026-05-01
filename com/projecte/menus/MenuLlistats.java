@@ -1,20 +1,23 @@
 package com.projecte.menus;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
+import com.projecte.entitats.Actor;
+import com.projecte.entitats.Director;
 import com.projecte.entitats.ListItem;
+import com.projecte.entitats.Pelicula;
 import com.projecte.entitats.Usuari;
 import com.projecte.main.GestorLlistes;
 
 public class MenuLlistats {
-   private static Scanner sc = new Scanner(System.in);
    public static void executarMenu(Usuari usuari){
+      GestorFitxerUsuaris.actualitzarLlistatsLocals(usuari);
+      GestorLlistes.actualitzarLlistatsLocal();
       System.out.println("Benvingut de nou " + usuari.getNom() + " " + usuari.getCognoms());
       String opcion;
       do {
          mostrarMenu();
-         opcion = retornarString("Introdueix una opció: ");
+         opcion = UI.retornarString("Introdueix una opció: ");
          switch (opcion) {
             case "1":
                veureLlistat(usuari);
@@ -33,19 +36,14 @@ public class MenuLlistats {
    }
 
    private static void mostrarMenu() {
-      System.out.println("--- MENÚ PRINCIPAL ---");
+      System.out.println("\n--- MENÚ PRINCIPAL ---");
       System.out.println("1.- Veure llistat");
       System.out.println("2.- Afegir elements a un llistat");
       System.out.println("0.- Tancar sessió");
    }
 
-   private static String retornarString(String missatge) {
-      System.out.println(missatge);
-      return sc.nextLine();
-   }
-
    private static void veureLlistat(Usuari usuari) {
-      System.out.println("--- ELIGEIX L'OPERACIÓ A FER ---");
+      System.out.println("\n--- ELIGEIX L'OPERACIÓ A FER ---");
       System.out.println("1.- Veure llistat de películes personal");
       System.out.println("2.- Veure llistat de directors personal");
       System.out.println("3.- Veure llistat de actors personal");
@@ -53,7 +51,7 @@ public class MenuLlistats {
       System.out.println("5.- Veure llistat de directors global");
       System.out.println("6.- Veure llistat de actors global");
       System.out.println("0.- Cancelar operació");
-      String opcion = retornarString("Introdueix què llistat dessitges veure: ");
+      String opcion = UI.retornarString("Introdueix què llistat dessitges veure: ");
       ArrayList<ListItem> llista = null;
       switch (opcion) {
          case "1":
@@ -85,7 +83,7 @@ public class MenuLlistats {
       if (llista != null) {
          mostrarLlista(llista);
          do {
-            opcion = retornarString("Vols veure detalls de un element en específic (s/n)?: ");
+            opcion = UI.retornarString("Vols veure detalls de un element en específic (s/n)?: ");
 
          } while (!opcion.equalsIgnoreCase("s") && !opcion.equalsIgnoreCase("n"));
 
@@ -96,7 +94,7 @@ public class MenuLlistats {
    }
 
    private static void afegirElementLlistat(Usuari usuari) {
-      System.out.println("--- ELIGEIX L'OPERACIÓ A FER ---");
+      System.out.println("\n--- ELIGEIX L'OPERACIÓ A FER ---");
       System.out.println("1.- Afegir element a películes personal");
       System.out.println("2.- Afegir element a directors personal");
       System.out.println("3.- Afegir element a actors personal");
@@ -104,25 +102,49 @@ public class MenuLlistats {
       System.out.println("5.- Afegir element a directors global");
       System.out.println("6.- Afegir element a actors global");
       System.out.println("0.- Cancelar operació");
-      String opcion = retornarString("Introdueix què llistat dessitges veure: ");
+      String opcion = UI.retornarString("Introdueix què llistat dessitges veure: ");
       switch (opcion) {
          case "1":
-            
+            try {
+               usuari.afegirPeli(new Pelicula(UI.retornarString("Escribe el nombre de la película: "), usuari.getLlistaPelis().size() + 1));
+            } catch (Exception e) {
+               System.out.println(e.getMessage());
+            }
             break;
          case "2":
-            
+            try {
+               usuari.afegirDire(new Director(UI.retornarString("Escribe el nombre del director: "), usuari.getLlistaPelis().size() + 1));
+            } catch (Exception e) {
+               System.out.println(e.getMessage());
+            }
             break;
          case "3":
-            
+            try {
+               usuari.afegirAct(new Actor(UI.retornarString("Escribe el nombre del actor: "), usuari.getLlistaPelis().size() + 1));
+            } catch (Exception e) {
+               System.out.println(e.getMessage());
+            }
             break;
          case "4":
-            
+            try {
+               GestorLlistes.afegirPeli(new Pelicula(UI.retornarString("Escribe el nombre de la pelicula: "), usuari.getLlistaPelis().size() + 1));
+            } catch (Exception e) {
+               System.out.println(e.getMessage());
+            }
             break;
          case "5":
-            
+            try {
+               GestorLlistes.afegirDire(new Director(UI.retornarString("Escribe el nombre del director: "), usuari.getLlistaPelis().size() + 1));
+            } catch (Exception e) {
+               System.out.println(e.getMessage());
+            }
             break;
          case "6":
-            
+            try {
+               GestorLlistes.afegirAct(new Actor(UI.retornarString("Escribe el nombre del actor: "), usuari.getLlistaPelis().size() + 1));
+            } catch (Exception e) {
+               System.out.println(e.getMessage());
+            }
             break;
          case "0":
             System.out.println("Se cancelarà l'operació");
@@ -131,6 +153,8 @@ public class MenuLlistats {
             System.out.println("ERROR: Valor introduit (" + opcion + ") no reconegut. Es cancelarà l'operació");
             break;
       }
+      GestorFitxerUsuaris.actualitzarLlistatsLocals(usuari);
+      GestorLlistes.actualitzarLlistatsLocal();
    }
 
    private static <T> void mostrarLlista(ArrayList<T> llista) {
@@ -146,22 +170,11 @@ public class MenuLlistats {
       }
       int opcion;
       do {
-         opcion = retornarInt("Introdueix un objecte a elegir: ");
+         opcion = UI.retornarInt("Introdueix un objecte a elegir: ");
          if (opcion < 1 || opcion > llista.size()) {
             System.out.println("ERROR: Elige un elemento de entre 1 y " + llista.size());
          }
       } while (opcion < 1 || opcion > llista.size());
       return llista.get(opcion);
-   }
-
-   private static int retornarInt(String missatge) {
-      do {
-         System.out.println(missatge);
-         if (sc.hasNextInt()) {
-            return sc.nextInt();
-         } else {
-            System.out.println("ERROR: El valor introducido (" + sc.nextLine() + ") no es un número");
-         }
-      } while (true);
    }
 }

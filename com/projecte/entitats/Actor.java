@@ -14,6 +14,12 @@ public class Actor implements Serializable, ListItem {
         this.peliculesActuatEn = peliculesActuatEn;
     }
 
+    public Actor(String nom, int id) {
+        this.id = id;
+        this.nom = nom;
+        this.peliculesActuatEn = new ArrayList<>();
+    }
+
     public void mostrarDetalles() {
         System.out.println("Actor " + nom + ":");
         System.out.println("- Pelis en les que ha actuat: \n" + nomsAct());
