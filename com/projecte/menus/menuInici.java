@@ -5,7 +5,7 @@ import com.projecte.entitats.Rol;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class menuInici {
+public class MenuInici {
     public static void executarMenu() {
         String opcion;
 
