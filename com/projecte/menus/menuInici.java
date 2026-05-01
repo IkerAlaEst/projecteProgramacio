@@ -2,11 +2,10 @@ package com.projecte.menus;
 
 import com.projecte.entitats.Usuari;
 import com.projecte.entitats.Rol;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class MenuInici {
+public class menuInici {
     public static void executarMenu() {
         String opcion;
 
@@ -38,7 +37,7 @@ public class MenuInici {
     private static void registrarUsuari() {
         String cont;
         String cont2;
-        int id = -1;
+        int id = 1;
 
         System.out.println("\n--- REGISTRE ---");
         String nom = UI.retornarString("Introdueix el teu nom: ");
